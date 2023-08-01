@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/siddharthrajaraja/low_level_design/tic_tac_toe/dtos"
 	"github.com/siddharthrajaraja/low_level_design/tic_tac_toe/service"
+	"github.com/siddharthrajaraja/low_level_design/tic_tac_toe/service/impl"
 )
 
 func main() {
@@ -26,7 +27,8 @@ func main() {
 	board := dtos.NewBord(numberOfRows)
 	board.InitialiseBoard()
 	board.PrintBoard("Printing board post initialisation")
-	boardService := service.NewBoardServiceImpl(board)
+	moveValidatorFactory := impl.NewMoveValidatorFactory()
+	boardService := service.NewBoardServiceImpl(board, moveValidatorFactory)
 
 	playService := service.NewPlayServiceImpl(player1, player2, boardService)
 	resp := playService.Play()

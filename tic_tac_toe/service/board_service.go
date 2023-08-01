@@ -7,7 +7,7 @@ import (
 
 type IBoardService interface {
 	Validate(int, int, string) bool
-	getMoveType(int, int) int
+	getMoveType(int, int) dtos.MoveType
 	MarkBoard(int, int, string)
 	CheckBoardEmpty() bool
 	IsBoardFilledAtPosition(int, int) bool
@@ -16,13 +16,15 @@ type IBoardService interface {
 }
 
 type BoardServiceImpl struct {
-	board *dtos.Board
+	board         *dtos.Board
+	moveValidator IMoveValidatorFactory
 }
 
-func NewBoardServiceImpl(board *dtos.Board) IBoardService {
+func NewBoardServiceImpl(board *dtos.Board, moveValidator IMoveValidatorFactory) IBoardService {
 
 	return &BoardServiceImpl{
-		board: board,
+		board:         board,
+		moveValidator: moveValidator,
 	}
 }
 
@@ -54,105 +56,37 @@ func (b *BoardServiceImpl) MarkBoard(xMove, yMove int, choice string) {
 
 func (b *BoardServiceImpl) Validate(lastXMove, lastYMove int, choice string) bool {
 
-	if b.validateColumn(lastXMove, lastYMove, choice) || b.validateRow(lastXMove, lastYMove, choice) {
+	if b.moveValidator.GetMoveValidator(dtos.RowValidator).Validate(b.board, lastXMove, lastYMove, choice) ||
+		b.moveValidator.GetMoveValidator(dtos.ColumnValidator).Validate(b.board, lastXMove, lastYMove, choice) {
 		return true
 	}
 
 	moveType := b.getMoveType(lastXMove, lastYMove)
+
 	switch moveType {
-	case utils.IntersectionDiagonalMove:
-		return b.validateFirstDiagonalMove(lastXMove, lastYMove, choice) ||
-			b.validateSecondDiagonalMove(lastXMove, lastYMove, choice)
-	case utils.FirstDiagonalMove:
-		return b.validateFirstDiagonalMove(lastXMove, lastYMove, choice)
-	case utils.SecondDiagonalMove:
-		return b.validateSecondDiagonalMove(lastXMove, lastYMove, choice)
+	case dtos.IntersectionDiagonalMove:
+		return b.moveValidator.GetMoveValidator(dtos.FirstDiagonalValidator).Validate(b.board, lastXMove, lastYMove, choice) ||
+			b.moveValidator.GetMoveValidator(dtos.SecondDiagonalValidator).Validate(b.board, lastXMove, lastYMove, choice)
+	case dtos.FirstDiagonalMove:
+		return b.moveValidator.GetMoveValidator(dtos.FirstDiagonalValidator).Validate(b.board, lastXMove, lastYMove,
+			choice)
+	case dtos.SecondDiagonalMove:
+		return b.moveValidator.GetMoveValidator(dtos.SecondDiagonalValidator).Validate(b.board, lastXMove, lastYMove,
+			choice)
 	}
 
 	return false
 }
 
-func (b *BoardServiceImpl) getMoveType(x, y int) int {
+func (b *BoardServiceImpl) getMoveType(x, y int) dtos.MoveType {
 
 	if x == y {
 		if b.board.N%2 != 0 && x == b.board.N/2 {
-			return utils.IntersectionDiagonalMove
+			return dtos.IntersectionDiagonalMove
 		}
-		return utils.FirstDiagonalMove
+		return dtos.FirstDiagonalMove
 	} else if x+y+1 == b.board.N {
-		return utils.SecondDiagonalMove
+		return dtos.SecondDiagonalMove
 	}
-	return utils.NoDiagonalMove
-}
-
-func (b *BoardServiceImpl) validateFirstDiagonalMove(x, y int, choice string) bool {
-
-	i := x
-	j := y
-	for i >= 0 && j >= 0 {
-		if b.board.Matrix[i][j] != choice {
-			return false
-		}
-		i--
-		j--
-	}
-
-	i = x
-	j = y
-
-	for i < b.board.N && j < b.board.N {
-
-		if b.board.Matrix[i][j] != choice {
-			return false
-		}
-		i++
-		j++
-	}
-	return true
-}
-
-func (b *BoardServiceImpl) validateSecondDiagonalMove(x, y int, choice string) bool {
-
-	i := x
-	j := y
-	for i >= 0 && j < b.board.N {
-		if b.board.Matrix[i][j] != choice {
-			return false
-		}
-		i--
-		j++
-	}
-
-	i = x
-	j = y
-
-	for i < b.board.N && j >= 0 {
-
-		if b.board.Matrix[i][j] != choice {
-			return false
-		}
-		i++
-		j--
-	}
-	return true
-}
-
-func (b *BoardServiceImpl) validateRow(x, y int, choice string) bool {
-
-	for j := 0; j < b.board.N; j++ {
-		if b.board.Matrix[x][j] != choice {
-			return false
-		}
-	}
-	return true
-}
-
-func (b *BoardServiceImpl) validateColumn(x, y int, choice string) bool {
-
-	for i := 0; i < b.board.N; i++ {
-		if b.board.Matrix[i][y] != choice {
-			return false
-		}
-	}
-	return true
+	return dtos.NoDiagonalMove
 }

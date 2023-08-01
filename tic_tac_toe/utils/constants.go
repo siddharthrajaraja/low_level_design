@@ -1,20 +1,10 @@
 package utils
 
-// Enum to get all move types
-const (
-	IntersectionDiagonalMove = 2
-	FirstDiagonalMove        = 0
-	SecondDiagonalMove       = 1
-	NoDiagonalMove           = -1
-)
-
-// Enum for Result of the Tic Tac Toe
 const (
 	GameWinningString = "Congratulations %s, you have won the game :-)\n"
 	Draw              = "Game is Draw"
 )
 
-// Enum for Players who will start
 const (
 	HashTag                      = "#"
 	X                            = "X"
