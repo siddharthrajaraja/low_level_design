@@ -13,7 +13,7 @@ type TodoController struct {
 
 func (t TodoController) AddTask(task dtos.Tasks, timeStamp *time.Time) {
 	// TODO implement me
-	t.taskService.AddTask(task, timeStamp, "")
+	t.taskService.AddTask(task, timeStamp, dtos.Created)
 }
 
 func (t TodoController) GetTask(s string) dtos.Tasks {
