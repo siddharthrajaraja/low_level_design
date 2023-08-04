@@ -3,7 +3,7 @@ package service
 import "github.com/siddharthrajaraja/low_level_design/trello/dtos"
 
 type IBoardService interface {
-	CreateBoard(name string)
+	CreateBoard(name string) string
 	AddUserToMembersList(userId string, boardId string)
 	RemoveUserFromMembersList(userId string, boardId string)
 	UpdateBoardAttributes(boardId string, newBoard *dtos.Board)

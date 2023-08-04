@@ -5,7 +5,7 @@ import (
 )
 
 type ICardService interface {
-	CreateCard(name, description string) *dtos.Cards
+	CreateCard(name, description string) string
 	AssignCardToUser(userId string, cardId string)
 	UpdateCardAttributes(cadId string, card *dtos.Cards)
 	ChangeListType(listType dtos.ListType, cardId string)

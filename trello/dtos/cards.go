@@ -7,14 +7,14 @@ import (
 
 type Cards struct {
 	id           string
-	name         string
-	description  string
-	assignedUser string
-	priority     TaskPriority
-	createdAt    int
-	finishedAt   int
-	eta          int
-	status       ListType
+	Name         string
+	Description  string
+	AssignedUser string
+	Priority     TaskPriority
+	CreatedAt    int
+	FinishedAt   int
+	Eta          int
+	Status       ListType
 }
 
 func NewCards(name, description string) *Cards {
@@ -22,13 +22,13 @@ func NewCards(name, description string) *Cards {
 	uuidValue, _ := uuid.NewV4()
 	return &Cards{
 		id:          uuidValue.String(),
-		name:        name,
-		description: description,
-		priority:    P0,
-		createdAt:   time.Now().Nanosecond(),
-		finishedAt:  -1,
-		eta:         -1,
-		status:      New,
+		Name:        name,
+		Description: description,
+		Priority:    P0,
+		CreatedAt:   time.Now().Nanosecond(),
+		FinishedAt:  -1,
+		Eta:         -1,
+		Status:      New,
 	}
 }
 
@@ -39,78 +39,78 @@ func (c *Cards) GetId() string {
 
 func (c *Cards) GetName() string {
 
-	return c.name
+	return c.Name
 }
 
 func (c *Cards) SetName(name string) {
 
-	c.name = name
+	c.Name = name
 }
 
 func (c *Cards) GetDescription() string {
 
-	return c.description
+	return c.Description
 }
 
 func (c *Cards) SetDescription(description string) {
 
-	c.description = description
+	c.Description = description
 }
 
 func (c *Cards) GetAssignedUser() string {
 
-	return c.assignedUser
+	return c.AssignedUser
 }
 
 func (c *Cards) SetAssignedUser(userId string) {
 
-	c.assignedUser = userId
+	c.AssignedUser = userId
 }
 
 func (c *Cards) GetPriority() TaskPriority {
-	return c.priority
+	return c.Priority
 }
 
 func (c *Cards) SetPriority(taskPriority TaskPriority) {
-	c.priority = taskPriority
+	c.Priority = taskPriority
 }
 
 func (c *Cards) GetCreatedAt() int {
 
-	return c.createdAt
+	return c.CreatedAt
 }
 
 func (c *Cards) SetCreatedAt(timeStamp int) {
 
-	c.createdAt = timeStamp
+	c.CreatedAt = timeStamp
 }
 
 func (c *Cards) GetFinishedAt() int {
 
-	return c.finishedAt
+	return c.FinishedAt
 }
 
 func (c *Cards) SetFinishedAt(timeStamp int) {
 
-	c.finishedAt = timeStamp
+	c.FinishedAt = timeStamp
 }
 
 func (c *Cards) GetEta() int {
 
-	return c.eta
+	return c.Eta
 }
 
 func (c *Cards) SetEta(timeStamp int) {
 
-	c.eta = timeStamp
+	c.Eta = timeStamp
 }
 
 func (c *Cards) GetStatus() ListType {
 
-	return c.status
+	return c.Status
 }
 
 func (c *Cards) SetStatus(status ListType) {
 
-	c.status = status
+	c.Status = status
 }

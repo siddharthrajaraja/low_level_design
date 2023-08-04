@@ -11,10 +11,11 @@ type ListServiceImpl struct {
 	cardService service.ICardService
 }
 
-func (l ListServiceImpl) CreateList(name string) {
+func (l ListServiceImpl) CreateList(name string) string {
 
 	list := dtos.NewList(name, dtos.New)
 	l.ListMap[list.GetListId()] = list
+	return list.GetListId()
 }
 
 func (l ListServiceImpl) GetList(id string) *dtos.List {

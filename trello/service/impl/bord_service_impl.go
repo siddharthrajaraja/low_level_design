@@ -12,10 +12,11 @@ type BoardServiceImpl struct {
 	listService service.IListService
 }
 
-func (b BoardServiceImpl) CreateBoard(name string) {
+func (b BoardServiceImpl) CreateBoard(name string) string {
 
 	board := dtos.NewBoard(name)
 	b.BoardMap[board.GetBoardId()] = board
+	return board.GetBoardId()
 }
 
 func (b BoardServiceImpl) AddUserToMembersList(userId string, boardId string) {
@@ -73,7 +74,6 @@ func (b BoardServiceImpl) UpdateBoardAttributes(boardId string, newBoard *dtos.B
 			if b.listService.CheckListExists(everyListId) {
 				board.SetList(everyListId)
 			}
-
 		}
 
 		for _, everyListId := range newBoard.GetMembersList() {

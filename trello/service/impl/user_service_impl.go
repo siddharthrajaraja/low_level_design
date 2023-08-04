@@ -9,10 +9,11 @@ type UserServiceImpl struct {
 	UserMap map[string]*dtos.Users
 }
 
-func (u UserServiceImpl) CreateUser(name, email string) {
+func (u UserServiceImpl) CreateUser(name, email string) string {
 
 	user := dtos.NewUser(name, email)
 	u.UserMap[user.GetUserId()] = user
+	return user.GetUserId()
 }
 
 func (u UserServiceImpl) CheckUserExists(id string) bool {

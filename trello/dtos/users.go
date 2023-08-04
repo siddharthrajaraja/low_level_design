@@ -4,8 +4,8 @@ import uuid "github.com/satori/go.uuid"
 
 type Users struct {
 	userId string
-	name   string
-	email  string
+	Name   string
+	Email  string
 }
 
 func NewUser(name, email string) *Users {
@@ -13,8 +13,8 @@ func NewUser(name, email string) *Users {
 	uuidValue, _ := uuid.NewV4()
 	return &Users{
 		userId: uuidValue.String(),
-		name:   name,
-		email:  email,
+		Name:   name,
+		Email:  email,
 	}
 }
 

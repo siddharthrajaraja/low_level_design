@@ -8,11 +8,11 @@ import (
 
 type Board struct {
 	id      string
-	name    string
-	privacy BoardPrivacy
-	url     string
-	members []string
-	lists   []string
+	Name    string
+	Privacy BoardPrivacy
+	Url     string
+	Members []string
+	Lists   []string
 }
 
 func NewBoard(name string) *Board {
@@ -21,9 +21,9 @@ func NewBoard(name string) *Board {
 
 	return &Board{
 		id:      uuidValue.String(),
-		name:    name,
-		privacy: Public,
-		url:     fmt.Sprintf(utils.BoardUrlPrefix, uuidValue),
+		Name:    name,
+		Privacy: Public,
+		Url:     fmt.Sprintf(utils.BoardUrlPrefix, uuidValue),
 	}
 }
 
@@ -34,45 +34,45 @@ func (b *Board) GetBoardId() string {
 
 func (b *Board) GetMembersList() []string {
 
-	return b.members
+	return b.Members
 }
 
 func (b *Board) SetMember(member string) {
 
-	b.members = append(b.members, member)
+	b.Members = append(b.Members, member)
 }
 
 func (b *Board) SetMembersList(member []string) {
 
-	b.members = member
+	b.Members = member
 }
 
 func (b *Board) GetUrl() string {
 
-	return b.url
+	return b.Url
 }
 
 func (b *Board) SetUrl(url string) {
 
-	b.url = url
+	b.Url = url
 }
 
 func (b *Board) GetPrivacy() BoardPrivacy {
 
-	return b.privacy
+	return b.Privacy
 }
 
 func (b *Board) SetPrivacy(privacy BoardPrivacy) {
 
-	b.privacy = privacy
+	b.Privacy = privacy
 }
 
 func (b *Board) GetList() []string {
 
-	return b.lists
+	return b.Lists
 }
 
 func (b *Board) SetList(listsId string) {
 
-	b.lists = append(b.lists, listsId)
+	b.Lists = append(b.Lists, listsId)
 }

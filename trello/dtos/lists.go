@@ -3,43 +3,43 @@ package dtos
 import uuid "github.com/satori/go.uuid"
 
 type List struct {
-	id       string
-	cardIds  []string
-	listType ListType
-	name     string
+	Id       string
+	CardIds  []string
+	ListType ListType
+	Name     string
 }
 
 func NewList(name string, listType ListType) *List {
 	uuidValue, _ := uuid.NewV4()
 
 	return &List{
-		id:       uuidValue.String(),
-		name:     name,
-		listType: listType,
+		Id:       uuidValue.String(),
+		Name:     name,
+		ListType: listType,
 	}
 }
 
 func (l *List) GetListId() string {
 
-	return l.id
+	return l.Id
 }
 
 func (l *List) GetListType() ListType {
 
-	return l.listType
+	return l.ListType
 }
 
 func (l *List) GetCardIds() []string {
 
-	return l.cardIds
+	return l.CardIds
 }
 
 func (l *List) SetCardId(cardId string) {
 
-	l.cardIds = append(l.cardIds, cardId)
+	l.CardIds = append(l.CardIds, cardId)
 }
 
 func (l *List) SetListType(listType ListType) {
 
-	l.listType = listType
+	l.ListType = listType
 }

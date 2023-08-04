@@ -18,11 +18,11 @@ func (c CardServiceImpl) DeleteCard(id string) {
 	}
 }
 
-func (c CardServiceImpl) CreateCard(name, description string) *dtos.Cards {
+func (c CardServiceImpl) CreateCard(name, description string) string {
 
 	newCard := dtos.NewCards(name, description)
 	c.CardMap[newCard.GetId()] = newCard
-	return newCard
+	return newCard.GetId()
 }
 
 func (c CardServiceImpl) AssignCardToUser(userId string, cardId string) {
@@ -78,7 +78,7 @@ func (c CardServiceImpl) CheckCardExists(id string) bool {
 	return isPresent
 }
 
-func NewCardServiceImpl(userService UserServiceImpl) service.ICardService {
+func NewCardServiceImpl(userService service.IUserService) service.ICardService {
 
 	cardMap := make(map[string]*dtos.Cards)
 	return &CardServiceImpl{
